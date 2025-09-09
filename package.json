@@ -1,0 +1,22 @@
+{
+  "name": "mr-chris-asst",
+  "version": "1.0.0",
+  "description": "Mr. Chris Assistant - A helpful assistant application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "node test.js",
+    "build": "echo 'Build completed successfully'"
+  },
+  "keywords": [
+    "assistant",
+    "helper",
+    "nodejs"
+  ],
+  "author": "chris-bit1010010",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.x"
+  }
+}
