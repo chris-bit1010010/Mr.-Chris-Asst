@@ -1,0 +1,3 @@
+Rule Name,Game Type,Match Type,Payout Multiple,Match Logic
+2-digit exact,2-digit,Exact,90,"RIGHT(Winning,2) = Pick ⇒ ×90"
+3-digit exact,3-digit,Exact,900,"RIGHT(Winning,3) = Pick ⇒ ×900"
