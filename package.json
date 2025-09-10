@@ -1,18 +1,23 @@
 {
   "name": "mr-chris-asst",
   "version": "1.0.0",
-  "description": "Mr. Chris Assistant - A helpful assistant application",
+  "description": "Mr. Chris Assistant - A helpful assistant application with Auto Notion Flow Template",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
     "test": "node test.js",
-    "build": "echo 'Build completed successfully'"
+    "build": "echo 'Build completed successfully'",
+    "flow-template": "node flow-template-utility.js",
+    "notion-setup": "node flow-template-utility.js"
   },
   "keywords": [
     "assistant",
     "helper",
-    "nodejs"
+    "nodejs",
+    "notion",
+    "flow-template",
+    "automation"
   ],
   "author": "chris-bit1010010",
   "license": "MIT",

@@ -27,5 +27,27 @@ if (assistant.name === 'Mr. Chris Assistant' && assistant.version === '1.0.0') {
     process.exit(1);
 }
 
-console.log('🎉 All tests passed! Mr. Chris Assistant is working correctly.');
-console.log('📈 Test Summary: 3/3 tests passed');
+// Test 4: Check Flow Template functionality
+if (assistant.flowTemplate && typeof assistant.runFlowTemplate === 'function') {
+    console.log('✅ Test 4 PASSED: Flow Template functionality available');
+} else {
+    console.log('❌ Test 4 FAILED: Flow Template functionality missing');
+    process.exit(1);
+}
+
+// Test 5: Test Flow Template execution (basic validation)
+try {
+    const result = assistant.runFlowTemplate();
+    if (result && result.status === 'success') {
+        console.log('✅ Test 5 PASSED: Flow Template executes successfully');
+    } else {
+        console.log('❌ Test 5 FAILED: Flow Template execution failed');
+        process.exit(1);
+    }
+} catch (error) {
+    console.log('❌ Test 5 FAILED: Flow Template execution error -', error.message);
+    process.exit(1);
+}
+
+console.log('🎉 All tests passed! Mr. Chris Assistant with Flow Template is working correctly.');
+console.log('📈 Test Summary: 5/5 tests passed');
