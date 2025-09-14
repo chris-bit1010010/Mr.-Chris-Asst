@@ -1,0 +1,57 @@
+name: Flow Auto – NEWLOTTO2025
+
+on:
+  issues:
+    types: [closed, reopened, labeled, unlabeled]
+  workflow_dispatch:
+    inputs:
+      draw_date:
+        description: Optional draw date for draws CSV (YYYY-MM-DD)
+        required: false
+      title:
+        description: Issue title to process
+        required: false
+
+permissions:
+  contents: write
+  issues: read
+
+env:
+  FLOW_NAME: NEWLOTTO2025
+  OUTDIR: dist
+
+jobs:
+  build:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issues' &&
+       github.event.action == 'closed' &&
+       (
+         contains(github.event.issue.title, 'Flow Template – NEWLOTTO2025') ||
+         contains(join(fromJson(toJson(github.event.issue.labels)).*.name, ','), 'flow-auto')
+       )
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate artifacts
+        run: |
+          python scripts/generate_artifacts.py \
+            --flow-name "${{ env.FLOW_NAME }}" \
+            --outdir "${{ env.OUTDIR }}" \
+            --draws-input "data/notion_Draws_*.csv" \
+            --draw-date "${{ inputs.draw_date || '' }}"
+
+      - name: Upload artifact (ZIP)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.FLOW_NAME }}_artifacts
+          path: ${{ env.OUTDIR }}/${{ env.FLOW_NAME }}_artifacts.zip
+          if-no-files-found: error
