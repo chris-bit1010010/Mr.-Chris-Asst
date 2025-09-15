@@ -1,0 +1,64 @@
+name: Notion Billing Agent
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: 'JSON payload for bill + items'
+        required: true
+        type: string
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Parse input
+        id: parse
+        run: |
+          echo '${{ github.event.inputs.payload }}' > payload.json
+          echo "Payload received:"
+          jq '.' payload.json
+
+      - name: Install dependencies
+        run: |
+          pip install jsonschema requests
+
+      - name: Validate schema
+        run: |
+          python - << 'PY'
+          import json, sys
+          from jsonschema import validate
+          
+          try:
+              schema = json.load(open('schema.json'))
+              payload = json.load(open('payload.json'))
+              validate(instance=payload, schema=schema)
+              print("✅ Schema validation: PASSED")
+          except Exception as e:
+              print(f"❌ Schema validation FAILED: {str(e)}")
+              sys.exit(1)
+          PY
+
+      - name: Run agent
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DB_BILLS: ${{ secrets.NOTION_DB_BILLS }}
+          NOTION_DB_ITEMS: ${{ secrets.NOTION_DB_ITEMS }}
+        run: |
+          python agent.py payload.json
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: billing-agent-results
+          path: |
+            payload.json
+          if-no-files-found: warn

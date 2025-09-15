@@ -76,3 +76,8 @@ Thumbs.db
 # Build outputs
 dist/
 build/
+
+# Billing agent temporary files
+payload.json
+test_payload.json
+*.tmp.json
