@@ -49,5 +49,42 @@ try {
     process.exit(1);
 }
 
-console.log('🎉 All tests passed! Mr. Chris Assistant with Flow Template is working correctly.');
-console.log('📈 Test Summary: 5/5 tests passed');
+// Test 6: Check if joke generator method exists
+if (typeof assistant.getJoke === 'function' && typeof assistant.displayJoke === 'function') {
+    console.log('✅ Test 6 PASSED: Joke generator methods exist');
+} else {
+    console.log('❌ Test 6 FAILED: Joke generator methods missing');
+    process.exit(1);
+}
+
+// Test 7: Test joke generator functionality (with timeout)
+console.log('🧪 Testing joke generator...');
+async function testJokeGenerator() {
+    try {
+        const joke = await assistant.getJoke();
+        if (joke && joke.fullJoke && typeof joke.fullJoke === 'string' && joke.fullJoke.length > 0) {
+            console.log('✅ Test 7 PASSED: Joke generator works and returns valid joke');
+            
+            // Test displayJoke function
+            const displayResult = assistant.displayJoke(joke);
+            if (displayResult === joke) {
+                console.log('✅ Test 8 PASSED: Display joke function works correctly');
+                console.log('🎉 All tests passed! Mr. Chris Assistant with Flow Template and Joke Generator is working correctly.');
+                console.log('📈 Test Summary: 8/8 tests passed');
+            } else {
+                console.log('❌ Test 8 FAILED: Display joke function not working correctly');
+                process.exit(1);
+            }
+        } else {
+            console.log('❌ Test 7 FAILED: Joke generator did not return a valid joke');
+            console.log('Received:', joke);
+            process.exit(1);
+        }
+    } catch (error) {
+        console.log('❌ Test 7 FAILED: Joke generator error -', error.message);
+        process.exit(1);
+    }
+}
+
+// Run async test
+testJokeGenerator();

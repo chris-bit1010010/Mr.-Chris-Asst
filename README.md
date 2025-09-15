@@ -70,6 +70,76 @@ Mr.-Chris-Asst/
         └── azure-webapps-node.yml  # Azure deployment workflow
 ```
 
+### 🎭 Random Joke Generator
+
+**Mr. Chris Assistant** now includes a built-in joke generator that fetches jokes from external APIs or uses fallback jokes when APIs are unavailable.
+
+#### Features:
+- ✨ Fetches jokes from multiple external APIs:
+  - [Official Joke API](https://official-joke-api.appspot.com/)
+  - [JokeAPI](https://v2.jokeapi.dev/)
+- 🔄 Automatic fallback to built-in jokes when APIs are unavailable
+- 🛡️ Comprehensive error handling for network issues
+- 🎯 Support for both setup/punchline and single-line joke formats
+- 📂 Joke categorization
+
+#### Usage:
+
+##### Programmatic Usage:
+```javascript
+const assistant = require('./index.js');
+
+// Get a joke (returns a promise)
+assistant.getJoke().then(joke => {
+  console.log('Joke:', joke.fullJoke);
+  
+  // Display formatted joke
+  assistant.displayJoke(joke);
+}).catch(error => {
+  console.error('Error getting joke:', error.message);
+});
+```
+
+##### Interactive Usage:
+1. Start the application:
+   ```bash
+   npm start
+   ```
+2. Use the joke generator in your code:
+   ```javascript
+   // Call the getJoke() function
+   const joke = await assistant.getJoke();
+   assistant.displayJoke(joke);
+   ```
+
+#### Joke Object Format:
+The `getJoke()` function returns a joke object with the following structure:
+```javascript
+{
+  setup: "Why don't scientists trust atoms?",        // null for single-line jokes
+  punchline: "Because they make up everything!",    // null for single-line jokes
+  fullJoke: "Why don't scientists trust atoms?\nBecause they make up everything!",
+  type: "science"                                    // Category of the joke
+}
+```
+
+#### Error Handling:
+- 🌐 Network timeouts (5-second timeout per API)
+- 🔧 API failures with automatic failover
+- 📦 Built-in fallback jokes ensure functionality always works
+- 📊 Detailed logging for debugging
+
+#### Example Output:
+```
+🎭 =============== JOKE TIME! =============== 🎭
+📂 Category: science
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💭 Setup: Why don't scientists trust atoms?
+😂 Punchline: Because they make up everything!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎉 Hope that made you smile!
+```
+
 ### 🛠️ การพัฟนา (Development)
 
 #### เพิ่มฟีเจอร์ใหม่ (Adding New Features)
@@ -132,6 +202,16 @@ This project includes a GitHub Actions workflow for automatic deployment to Azur
 | `npm run dev` | เริ่มต้นในโหมด development |
 | `npm test` | รันเทส |
 | `npm run build` | Build โปรเจ็กต์ |
+
+### 🎮 Available Functions in Code:
+
+| Function | Description |
+|----------|-------------|
+| `assistant.getJoke()` | Get a random joke from external APIs or fallback collection |
+| `assistant.displayJoke(joke)` | Display a formatted joke with nice styling |
+| `assistant.greet()` | Display assistant greeting |
+| `assistant.help()` | Show available commands |
+| `assistant.runFlowTemplate()` | Execute the Auto Notion Flow Template |
 
 ### 🔧 การแก้ปัญหา (Troubleshooting)
 
