@@ -51,21 +51,70 @@ npm run dev
 npm test
 ```
 
+#### ทดสอบ Task Manager
+```bash
+node taskManager.test.js
+```
+
+#### ดูตัวอย่างการใช้งาน Task Manager
+```bash
+node demo.js
+```
+
 #### Build โปรเจ็กต์
 ```bash
 npm run build
+```
+
+### 📝 Task Manager Features
+
+Mr. Chris Assistant มาพร้อมกับระบบจัดการงาน (Task Manager) ที่ช่วยให้คุณสามารถ:
+
+**Task Manager includes the following features:**
+
+- ✅ **Add Tasks** - เพิ่มงานใหม่ / Add new tasks
+- 📋 **List Tasks** - แสดงรายการงาน (ทั้งหมด, ที่เสร็จแล้ว, หรือที่รอดำเนินการ) / View all, completed, or pending tasks
+- ✓ **Complete Tasks** - ทำเครื่องหมายงานว่าเสร็จแล้ว / Mark tasks as completed
+- 🗑️ **Delete Tasks** - ลบงาน / Delete tasks
+- 📊 **Task Statistics** - ดูสถิติงาน / View task statistics
+
+#### ตัวอย่างการใช้งาน (Usage Example)
+
+```javascript
+const assistant = require('./index.js');
+
+// Add a new task
+assistant.addTask('Complete project documentation');
+
+// List all tasks
+assistant.listTasks('all');
+
+// List only pending tasks
+assistant.listTasks('pending');
+
+// List only completed tasks
+assistant.listTasks('completed');
+
+// Complete a task by ID
+assistant.completeTask(1);
+
+// Show task statistics
+assistant.showTaskStats();
 ```
 
 ### 📁 โครงสร้างโปรเจ็กต์ (Project Structure)
 
 ```
 Mr.-Chris-Asst/
-├── index.js          # ไฟล์หลักของแอปพลิเคชัน (Main application file)
-├── test.js           # ไฟล์ทดสอบ (Test file)
-├── package.json      # ข้อมูลโปรเจ็กต์และ dependencies
-├── README.md         # คู่มือการใช้งาน (This file)
-├── .gitignore        # ไฟล์ที่ Git จะไม่ติดตาม
-└── .github/          # GitHub Actions workflows
+├── index.js           # ไฟล์หลักของแอปพลิเคชัน (Main application file)
+├── taskManager.js     # โมดูลจัดการงาน (Task Manager module)
+├── test.js            # ไฟล์ทดสอบ (Test file)
+├── taskManager.test.js # ไฟล์ทดสอบ Task Manager (Task Manager test file)
+├── demo.js            # ตัวอย่างการใช้งาน Task Manager (Task Manager demo)
+├── package.json       # ข้อมูลโปรเจ็กต์และ dependencies
+├── README.md          # คู่มือการใช้งาน (This file)
+├── .gitignore         # ไฟล์ที่ Git จะไม่ติดตาม
+└── .github/           # GitHub Actions workflows
     └── workflows/
         └── azure-webapps-node.yml  # Azure deployment workflow
 ```

@@ -7,6 +7,8 @@
     "start": "node index.js",
     "dev": "node index.js",
     "test": "node test.js",
+    "test:taskmanager": "node taskManager.test.js",
+    "demo": "node demo.js",
     "build": "echo 'Build completed successfully'"
   },
   "keywords": [
