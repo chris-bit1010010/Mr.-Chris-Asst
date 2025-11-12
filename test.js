@@ -27,5 +27,23 @@ if (assistant.name === 'Mr. Chris Assistant' && assistant.version === '1.0.0') {
     process.exit(1);
 }
 
+// Test 4: Check if assistant has task manager
+if (assistant.taskManager && typeof assistant.addTask === 'function') {
+    console.log('✅ Test 4 PASSED: Assistant has task manager functionality');
+} else {
+    console.log('❌ Test 4 FAILED: Task manager functionality not found');
+    process.exit(1);
+}
+
+// Test 5: Check if assistant has all task management methods
+if (typeof assistant.listTasks === 'function' && 
+    typeof assistant.completeTask === 'function' &&
+    typeof assistant.showTaskStats === 'function') {
+    console.log('✅ Test 5 PASSED: All task management methods present');
+} else {
+    console.log('❌ Test 5 FAILED: Some task management methods are missing');
+    process.exit(1);
+}
+
 console.log('🎉 All tests passed! Mr. Chris Assistant is working correctly.');
-console.log('📈 Test Summary: 3/3 tests passed');
+console.log('📈 Test Summary: 5/5 tests passed');
