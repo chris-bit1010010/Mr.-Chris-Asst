@@ -9,7 +9,10 @@
     "test": "node test.js",
     "build": "echo 'Build completed successfully'",
     "flow-template": "node flow-template-utility.js",
-    "notion-setup": "node flow-template-utility.js"
+    "notion-setup": "node flow-template-utility.js",
+    "validate-csv": "node scripts/validate-csv.js",
+    "import-guide": "node scripts/import-guide.js",
+    "setup-help": "node scripts/setup-help.js"
   },
   "keywords": [
     "assistant",
