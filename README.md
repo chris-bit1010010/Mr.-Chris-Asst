@@ -40,6 +40,25 @@ Before getting started, make sure you have the following installed:
 ```bash
 npm start
 ```
+แอปพลิเคชันจะทำการตรวจสอบไฟล์ CSV และรัน Flow Template โดยอัตโนมัติ
+
+#### ตรวจสอบไฟล์ CSV (Validate CSV Files)
+```bash
+npm run validate-csv
+```
+ตรวจสอบความถูกต้องของไฟล์ CSV ทั้งหมดก่อนนำเข้า Notion
+
+#### แสดงคำแนะนำการนำเข้า Notion (Show Import Guide)
+```bash
+npm run import-guide
+```
+แสดงคำแนะนำทีละขั้นตอนสำหรับการนำเข้าข้อมูลไปยัง Notion
+
+#### ดูความช่วยเหลือ (Get Help)
+```bash
+npm run setup-help
+```
+แสดงคำสั่งทั้งหมดและคำแนะนำการใช้งาน
 
 #### เรียกใช้ในโหมด Development
 ```bash
@@ -56,18 +75,69 @@ npm test
 npm run build
 ```
 
+### ✨ ฟีเจอร์ใหม่ (New Features)
+
+#### 🔍 CSV Validation
+- ตรวจสอบโครงสร้างและข้อมูลใน CSV files
+- แจ้งเตือน errors และ warnings
+- รองรับการตรวจสอบ data types และ required fields
+
+#### 📚 Import Helper
+- คำแนะนำการนำเข้าข้อมูลแบบทีละขั้นตอน
+- Quick Reference Card สำหรับการทำงานกับ Notion
+- เอกสารสูตรการคำนวณและความสัมพันธ์ระหว่างฐานข้อมูล
+
+#### 🛠️ Utility Scripts
+- `validate-csv.js` - ตรวจสอบไฟล์ CSV
+- `import-guide.js` - แสดงคำแนะนำการนำเข้า
+- `setup-help.js` - แสดงความช่วยเหลือ
+
+#### 📖 เอกสารประกอบ (Documentation)
+- `docs/QUICK-START.md` - คู่มือเริ่มต้นใช้งานแบบย่อ
+- `docs/API.md` - เอกสาร API แบบครบถ้วน
+- `FLOW-TEMPLATE-GUIDE.md` - คู่มือ Flow Template
+
 ### 📁 โครงสร้างโปรเจ็กต์ (Project Structure)
 
 ```
 Mr.-Chris-Asst/
-├── index.js          # ไฟล์หลักของแอปพลิเคชัน (Main application file)
-├── test.js           # ไฟล์ทดสอบ (Test file)
-├── package.json      # ข้อมูลโปรเจ็กต์และ dependencies
-├── README.md         # คู่มือการใช้งาน (This file)
-├── .gitignore        # ไฟล์ที่ Git จะไม่ติดตาม
-└── .github/          # GitHub Actions workflows
-    └── workflows/
-        └── azure-webapps-node.yml  # Azure deployment workflow
+├── src/                    # Source code directory
+│   ├── lib/               # Core libraries
+│   │   ├── flow-template.js
+│   │   └── index.js
+│   ├── utils/             # Utility functions
+│   │   ├── csv-validator.js
+│   │   ├── flow-template-utility.js
+│   │   ├── notion-import-helper.js
+│   │   └── index.js
+│   └── index.js           # Main library exports
+├── config/                # Configuration files
+│   └── default.js         # Default configuration
+├── scripts/               # Utility scripts
+│   ├── validate-csv.js    # CSV validation script
+│   ├── import-guide.js    # Import guide generator
+│   ├── setup-help.js      # Setup help display
+│   └── generate_artifacts.py
+├── docs/                  # Documentation
+│   ├── guides/            # User guides
+│   ├── API.md             # API documentation
+│   └── QUICK-START.md     # Quick start guide
+├── notion_files/          # Notion CSV data files
+│   ├── notion_Draws.csv
+│   ├── notion_Participants.csv
+│   ├── notion_PayoutRules.csv
+│   ├── notion_Entries.csv
+│   ├── notion_Payments_manual.csv
+│   └── README_NOTION_ONLY.md
+├── data/                  # Data storage
+├── index.js               # Main application entry point
+├── flow-template.js       # Flow template (backwards compatible)
+├── flow-template-utility.js # Flow utility (backwards compatible)
+├── test.js                # Test file
+├── package.json           # Project dependencies
+├── README.md              # This file
+├── FLOW-TEMPLATE-GUIDE.md # Flow template documentation
+└── .gitignore             # Git ignore rules
 ```
 
 ### 🛠️ การพัฟนา (Development)
@@ -128,10 +198,15 @@ This project includes a GitHub Actions workflow for automatic deployment to Azur
 
 | คำสั่ง | คำอธิบาย |
 |--------|----------|
-| `npm start` | เริ่มต้นแอปพลิเคชัน |
+| `npm start` | เริ่มต้นแอปพลิเคชัน พร้อมการตรวจสอบและรันเทมเพลต |
 | `npm run dev` | เริ่มต้นในโหมด development |
 | `npm test` | รันเทส |
 | `npm run build` | Build โปรเจ็กต์ |
+| `npm run validate-csv` | ตรวจสอบความถูกต้องของไฟล์ CSV ก่อนนำเข้า Notion |
+| `npm run import-guide` | แสดงคำแนะนำการนำเข้าข้อมูลไปยัง Notion |
+| `npm run flow-template` | รันเครื่องมือ flow template พร้อมการวิเคราะห์โดยละเอียด |
+| `npm run notion-setup` | แสดงคำแนะนำการตั้งค่า Notion |
+| `npm run setup-help` | แสดงความช่วยเหลือและคำสั่งทั้งหมด |
 
 ### 🔧 การแก้ปัญหา (Troubleshooting)
 
