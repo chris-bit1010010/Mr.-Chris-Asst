@@ -16,17 +16,17 @@ class FlowTemplateUtility {
         console.log('📊 CSV Data Analysis');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
-        const flowData = this.flowTemplate.loadFlowData();
+        const loadedFlowData = this.flowTemplate.loadFlowData();
         
-        Object.entries(flowData).forEach(([key, data]) => {
-            if (data && data.records.length > 0) {
-                console.log(`\n🗂️  ${key.toUpperCase()}`);
-                console.log(`   Records: ${data.records.length}`);
-                console.log(`   Headers: ${data.headers.join(', ')}`);
+        Object.entries(loadedFlowData).forEach(([flowType, csvData]) => {
+            if (csvData && csvData.records.length > 0) {
+                console.log(`\n🗂️  ${flowType.toUpperCase()}`);
+                console.log(`   Records: ${csvData.records.length}`);
+                console.log(`   Headers: ${csvData.headers.join(', ')}`);
                 
                 // Show sample data
-                if (data.records[0]) {
-                    console.log(`   Sample: ${JSON.stringify(data.records[0], null, 2)}`);
+                if (csvData.records[0]) {
+                    console.log(`   Sample: ${JSON.stringify(csvData.records[0], null, 2)}`);
                 }
             }
         });
@@ -60,7 +60,7 @@ class FlowTemplateUtility {
         console.log('\n🔗 Database Relations Setup');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
-        const relations = [
+        const databaseRelations = [
             {
                 database: 'Entries',
                 property: 'Participant',
@@ -81,10 +81,10 @@ class FlowTemplateUtility {
             }
         ];
 
-        relations.forEach(relation => {
-            console.log(`\n🔸 ${relation.database} → ${relation.target}`);
-            console.log(`   Property: ${relation.property}`);
-            console.log(`   Purpose: ${relation.description}`);
+        databaseRelations.forEach(relationConfig => {
+            console.log(`\n🔸 ${relationConfig.database} → ${relationConfig.target}`);
+            console.log(`   Property: ${relationConfig.property}`);
+            console.log(`   Purpose: ${relationConfig.description}`);
         });
     }
 
@@ -93,7 +93,7 @@ class FlowTemplateUtility {
         console.log('\n📐 Formula Templates');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
-        const formulas = [
+        const notionFormulas = [
             {
                 property: 'Winnings',
                 database: 'Entries',
@@ -120,10 +120,10 @@ class FlowTemplateUtility {
             }
         ];
 
-        formulas.forEach(formula => {
-            console.log(`\n📊 ${formula.database}.${formula.property}`);
-            console.log(`   Formula: ${formula.formula}`);
-            console.log(`   Purpose: ${formula.description}`);
+        notionFormulas.forEach(formulaConfig => {
+            console.log(`\n📊 ${formulaConfig.database}.${formulaConfig.property}`);
+            console.log(`   Formula: ${formulaConfig.formula}`);
+            console.log(`   Purpose: ${formulaConfig.description}`);
         });
     }
 
@@ -132,7 +132,7 @@ class FlowTemplateUtility {
         console.log('\n👁️  Recommended View Configurations');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
-        const views = [
+        const recommendedViews = [
             {
                 name: 'Entries - By Draw',
                 type: 'Board',
@@ -163,14 +163,14 @@ class FlowTemplateUtility {
             }
         ];
 
-        views.forEach(view => {
-            console.log(`\n📋 ${view.name}`);
-            console.log(`   Type: ${view.type}`);
-            console.log(`   Database: ${view.database}`);
-            if (view.groupBy) console.log(`   Group By: ${view.groupBy}`);
-            if (view.filter) console.log(`   Filter: ${view.filter}`);
-            if (view.properties) console.log(`   Properties: ${view.properties.join(', ')}`);
-            console.log(`   Purpose: ${view.description}`);
+        recommendedViews.forEach(viewConfig => {
+            console.log(`\n📋 ${viewConfig.name}`);
+            console.log(`   Type: ${viewConfig.type}`);
+            console.log(`   Database: ${viewConfig.database}`);
+            if (viewConfig.groupBy) console.log(`   Group By: ${viewConfig.groupBy}`);
+            if (viewConfig.filter) console.log(`   Filter: ${viewConfig.filter}`);
+            if (viewConfig.properties) console.log(`   Properties: ${viewConfig.properties.join(', ')}`);
+            console.log(`   Purpose: ${viewConfig.description}`);
         });
     }
 

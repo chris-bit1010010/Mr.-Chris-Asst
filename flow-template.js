@@ -36,21 +36,21 @@ class NotionFlowTemplate {
     // Parse CSV data for flow processing
     parseCSV(filePath) {
         try {
-            const data = fs.readFileSync(filePath, 'utf8');
-            const lines = data.trim().split('\n');
-            const headers = lines[0].split(',');
-            const records = [];
+            const fileContent = fs.readFileSync(filePath, 'utf8');
+            const csvLines = fileContent.trim().split('\n');
+            const csvHeaders = csvLines[0].split(',');
+            const parsedRecords = [];
 
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(',');
-                const record = {};
-                headers.forEach((header, index) => {
-                    record[header.trim()] = values[index] ? values[index].trim() : '';
+            for (let lineIndex = 1; lineIndex < csvLines.length; lineIndex++) {
+                const lineValues = csvLines[lineIndex].split(',');
+                const recordObject = {};
+                csvHeaders.forEach((headerName, columnIndex) => {
+                    recordObject[headerName.trim()] = lineValues[columnIndex] ? lineValues[columnIndex].trim() : '';
                 });
-                records.push(record);
+                parsedRecords.push(recordObject);
             }
 
-            return { headers, records };
+            return { headers: csvHeaders, records: parsedRecords };
         } catch (error) {
             console.error(`❌ Error parsing CSV ${filePath}:`, error.message);
             return null;
@@ -60,22 +60,22 @@ class NotionFlowTemplate {
     // Load and process flow data
     loadFlowData() {
         console.log('📊 Loading flow data...');
-        const flowData = {};
+        const loadedFlowData = {};
 
-        for (const [key, filename] of Object.entries(this.flows)) {
-            const filePath = path.join(this.dataPath, filename);
-            console.log(`📄 Processing ${key}: ${filename}`);
+        for (const [flowType, csvFileName] of Object.entries(this.flows)) {
+            const csvFilePath = path.join(this.dataPath, csvFileName);
+            console.log(`📄 Processing ${flowType}: ${csvFileName}`);
             
-            const data = this.parseCSV(filePath);
-            if (data) {
-                flowData[key] = data;
-                console.log(`✅ Loaded ${data.records.length} records for ${key}`);
+            const parsedCsvData = this.parseCSV(csvFilePath);
+            if (parsedCsvData) {
+                loadedFlowData[flowType] = parsedCsvData;
+                console.log(`✅ Loaded ${parsedCsvData.records.length} records for ${flowType}`);
             } else {
-                console.log(`❌ Failed to load ${key}`);
+                console.log(`❌ Failed to load ${flowType}`);
             }
         }
 
-        return flowData;
+        return loadedFlowData;
     }
 
     // Generate Notion flow template structure
@@ -240,27 +240,27 @@ class NotionFlowTemplate {
             return false;
         }
 
-        const flowData = this.loadFlowData();
-        const template = this.generateNotionTemplate();
-        const autoFlows = this.createAutoFlows();
-        const documentation = this.generateFlowDocumentation();
+        const loadedFlowData = this.loadFlowData();
+        const notionTemplate = this.generateNotionTemplate();
+        const automationFlows = this.createAutoFlows();
+        const flowDocumentation = this.generateFlowDocumentation();
 
-        const result = {
+        const executionResult = {
             status: 'success',
             message: 'Auto Notion Flow Template executed successfully',
             data: {
-                records: Object.keys(flowData).reduce((acc, key) => {
-                    acc[key] = flowData[key] ? flowData[key].records.length : 0;
-                    return acc;
+                records: Object.keys(loadedFlowData).reduce((recordCounts, flowType) => {
+                    recordCounts[flowType] = loadedFlowData[flowType] ? loadedFlowData[flowType].records.length : 0;
+                    return recordCounts;
                 }, {}),
-                template,
-                autoFlows,
-                documentation
+                template: notionTemplate,
+                autoFlows: automationFlows,
+                documentation: flowDocumentation
             }
         };
 
         console.log('✅ Flow execution completed successfully');
-        return result;
+        return executionResult;
     }
 
     // Display flow template summary
