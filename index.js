@@ -28,17 +28,17 @@ const assistant = {
     // Execute Flow Template for Auto Notion
     runFlowTemplate() {
         console.log('\n🔄 Starting Auto Notion Flow Template...');
-        const result = this.flowTemplate.executeFlow();
+        const flowExecutionResult = this.flowTemplate.executeFlow();
         
-        if (result && result.status === 'success') {
+        if (flowExecutionResult && flowExecutionResult.status === 'success') {
             this.flowTemplate.displaySummary();
             console.log('\n📊 Data Summary:');
-            Object.entries(result.data.records).forEach(([key, count]) => {
-                console.log(`   ${key}: ${count} records`);
+            Object.entries(flowExecutionResult.data.records).forEach(([recordType, recordCount]) => {
+                console.log(`   ${recordType}: ${recordCount} records`);
             });
         }
         
-        return result;
+        return flowExecutionResult;
     }
 };
 

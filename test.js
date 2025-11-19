@@ -37,8 +37,8 @@ if (assistant.flowTemplate && typeof assistant.runFlowTemplate === 'function') {
 
 // Test 5: Test Flow Template execution (basic validation)
 try {
-    const result = assistant.runFlowTemplate();
-    if (result && result.status === 'success') {
+    const flowExecutionResult = assistant.runFlowTemplate();
+    if (flowExecutionResult && flowExecutionResult.status === 'success') {
         console.log('✅ Test 5 PASSED: Flow Template executes successfully');
     } else {
         console.log('❌ Test 5 FAILED: Flow Template execution failed');
