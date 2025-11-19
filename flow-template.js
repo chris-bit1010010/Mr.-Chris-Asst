@@ -16,6 +16,9 @@ class NotionFlowTemplate {
             entries: 'notion_Entries.csv',
             payments: 'notion_Payments_manual.csv'
         };
+        // Cache for parsed CSV data to avoid redundant file operations
+        this.cache = {};
+        this.cacheEnabled = true;
     }
 
     // Initialize the flow template system
@@ -33,35 +36,54 @@ class NotionFlowTemplate {
         return true;
     }
 
-    // Parse CSV data for flow processing
+    // Parse CSV data for flow processing with improved efficiency
     parseCSV(filePath) {
         try {
+            // Check cache first to avoid redundant file reads
+            if (this.cacheEnabled && this.cache[filePath]) {
+                return this.cache[filePath];
+            }
+
             const fileContent = fs.readFileSync(filePath, 'utf8');
             const csvLines = fileContent.trim().split('\n');
-            const csvHeaders = csvLines[0].split(',');
+            
+            // Optimized: Parse headers once and trim in a single pass
+            const csvHeaders = csvLines[0].split(',').map(h => h.trim());
             const parsedRecords = [];
+            const headerCount = csvHeaders.length;
 
+            // Optimized: Use for loop instead of forEach for better performance
             for (let lineIndex = 1; lineIndex < csvLines.length; lineIndex++) {
                 const lineValues = csvLines[lineIndex].split(',');
                 const recordObject = {};
-                csvHeaders.forEach((headerName, columnIndex) => {
-                    recordObject[headerName.trim()] = lineValues[columnIndex] ? lineValues[columnIndex].trim() : '';
-                });
+                
+                // Optimized: Direct assignment instead of forEach
+                for (let columnIndex = 0; columnIndex < headerCount; columnIndex++) {
+                    recordObject[csvHeaders[columnIndex]] = lineValues[columnIndex] ? lineValues[columnIndex].trim() : '';
+                }
                 parsedRecords.push(recordObject);
             }
 
-            return { headers: csvHeaders, records: parsedRecords };
+            const result = { headers: csvHeaders, records: parsedRecords };
+            
+            // Cache the result to avoid redundant parsing
+            if (this.cacheEnabled) {
+                this.cache[filePath] = result;
+            }
+            
+            return result;
         } catch (error) {
             console.error(`❌ Error parsing CSV ${filePath}:`, error.message);
             return null;
         }
     }
 
-    // Load and process flow data
+    // Load and process flow data with optimized iteration
     loadFlowData() {
         console.log('📊 Loading flow data...');
         const loadedFlowData = {};
 
+        // Optimized: Use for...of for better performance than Object.entries + forEach
         for (const [flowType, csvFileName] of Object.entries(this.flows)) {
             const csvFilePath = path.join(this.dataPath, csvFileName);
             console.log(`📄 Processing ${flowType}: ${csvFileName}`);
@@ -232,7 +254,7 @@ class NotionFlowTemplate {
         return documentation;
     }
 
-    // Execute the complete flow template setup
+    // Execute the complete flow template setup with optimized performance
     executeFlow() {
         console.log('🎯 Executing Auto Notion Flow Template...');
         
@@ -245,14 +267,17 @@ class NotionFlowTemplate {
         const automationFlows = this.createAutoFlows();
         const flowDocumentation = this.generateFlowDocumentation();
 
+        // Optimized: Use Object.keys with reduce for better performance
+        const recordCounts = {};
+        for (const flowType of Object.keys(loadedFlowData)) {
+            recordCounts[flowType] = loadedFlowData[flowType] ? loadedFlowData[flowType].records.length : 0;
+        }
+
         const executionResult = {
             status: 'success',
             message: 'Auto Notion Flow Template executed successfully',
             data: {
-                records: Object.keys(loadedFlowData).reduce((recordCounts, flowType) => {
-                    recordCounts[flowType] = loadedFlowData[flowType] ? loadedFlowData[flowType].records.length : 0;
-                    return recordCounts;
-                }, {}),
+                records: recordCounts,
                 template: notionTemplate,
                 autoFlows: automationFlows,
                 documentation: flowDocumentation

@@ -11,14 +11,15 @@ class FlowTemplateUtility {
         this.flowTemplate = new NotionFlowTemplate();
     }
 
-    // Generate detailed CSV analysis
+    // Generate detailed CSV analysis with optimized iteration
     generateCSVAnalysis() {
         console.log('📊 CSV Data Analysis');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
         const loadedFlowData = this.flowTemplate.loadFlowData();
         
-        Object.entries(loadedFlowData).forEach(([flowType, csvData]) => {
+        // Optimized: Use for...of instead of Object.entries().forEach()
+        for (const [flowType, csvData] of Object.entries(loadedFlowData)) {
             if (csvData && csvData.records.length > 0) {
                 console.log(`\n🗂️  ${flowType.toUpperCase()}`);
                 console.log(`   Records: ${csvData.records.length}`);
@@ -29,7 +30,7 @@ class FlowTemplateUtility {
                     console.log(`   Sample: ${JSON.stringify(csvData.records[0], null, 2)}`);
                 }
             }
-        });
+        }
     }
 
     // Generate Notion import instructions
@@ -55,7 +56,7 @@ class FlowTemplateUtility {
         });
     }
 
-    // Generate relation setup guide
+    // Generate relation setup guide with optimized iteration
     generateRelationGuide() {
         console.log('\n🔗 Database Relations Setup');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -81,14 +82,15 @@ class FlowTemplateUtility {
             }
         ];
 
-        databaseRelations.forEach(relationConfig => {
+        // Optimized: Use for...of instead of forEach for better performance
+        for (const relationConfig of databaseRelations) {
             console.log(`\n🔸 ${relationConfig.database} → ${relationConfig.target}`);
             console.log(`   Property: ${relationConfig.property}`);
             console.log(`   Purpose: ${relationConfig.description}`);
-        });
+        }
     }
 
-    // Generate formula templates
+    // Generate formula templates with optimized iteration
     generateFormulas() {
         console.log('\n📐 Formula Templates');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -120,14 +122,15 @@ class FlowTemplateUtility {
             }
         ];
 
-        notionFormulas.forEach(formulaConfig => {
+        // Optimized: Use for...of instead of forEach for better performance
+        for (const formulaConfig of notionFormulas) {
             console.log(`\n📊 ${formulaConfig.database}.${formulaConfig.property}`);
             console.log(`   Formula: ${formulaConfig.formula}`);
             console.log(`   Purpose: ${formulaConfig.description}`);
-        });
+        }
     }
 
-    // Generate view configurations
+    // Generate view configurations with optimized iteration
     generateViewConfigurations() {
         console.log('\n👁️  Recommended View Configurations');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -163,7 +166,8 @@ class FlowTemplateUtility {
             }
         ];
 
-        recommendedViews.forEach(viewConfig => {
+        // Optimized: Use for...of instead of forEach for better performance
+        for (const viewConfig of recommendedViews) {
             console.log(`\n📋 ${viewConfig.name}`);
             console.log(`   Type: ${viewConfig.type}`);
             console.log(`   Database: ${viewConfig.database}`);
@@ -171,7 +175,7 @@ class FlowTemplateUtility {
             if (viewConfig.filter) console.log(`   Filter: ${viewConfig.filter}`);
             if (viewConfig.properties) console.log(`   Properties: ${viewConfig.properties.join(', ')}`);
             console.log(`   Purpose: ${viewConfig.description}`);
-        });
+        }
     }
 
     // Main execution function

@@ -25,7 +25,7 @@ const assistant = {
         console.log('- Flow Template: Auto Notion integration available');
     },
 
-    // Execute Flow Template for Auto Notion
+    // Execute Flow Template for Auto Notion with optimized iteration
     runFlowTemplate() {
         console.log('\n🔄 Starting Auto Notion Flow Template...');
         const flowExecutionResult = this.flowTemplate.executeFlow();
@@ -33,9 +33,10 @@ const assistant = {
         if (flowExecutionResult && flowExecutionResult.status === 'success') {
             this.flowTemplate.displaySummary();
             console.log('\n📊 Data Summary:');
-            Object.entries(flowExecutionResult.data.records).forEach(([recordType, recordCount]) => {
+            // Optimized: Use for...of instead of Object.entries().forEach()
+            for (const [recordType, recordCount] of Object.entries(flowExecutionResult.data.records)) {
                 console.log(`   ${recordType}: ${recordCount} records`);
-            });
+            }
         }
         
         return flowExecutionResult;
