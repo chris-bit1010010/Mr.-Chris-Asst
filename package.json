@@ -1,7 +1,7 @@
 {
   "name": "mr-chris-asst",
   "version": "1.0.0",
-  "description": "Mr. Chris Assistant - A helpful assistant application with Auto Notion Flow Template",
+  "description": "Mr. Chris Assistant - A helpful assistant application with Auto Notion Flow Template and Workspace Organizer",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -9,7 +9,10 @@
     "test": "node test.js",
     "build": "echo 'Build completed successfully'",
     "flow-template": "node flow-template-utility.js",
-    "notion-setup": "node flow-template-utility.js"
+    "notion-setup": "node flow-template-utility.js",
+    "workspace-analyze": "node -e \"const a = require('./index.js'); a.analyzeWorkspace();\"",
+    "workspace-organize": "node -e \"const a = require('./index.js'); a.runWorkspaceOrganizer({ dryRun: true });\"",
+    "workspace-report": "node -e \"const a = require('./index.js'); a.generateReorganizationReport();\""
   },
   "keywords": [
     "assistant",
@@ -17,7 +20,10 @@
     "nodejs",
     "notion",
     "flow-template",
-    "automation"
+    "automation",
+    "workspace-organizer",
+    "para-methodology",
+    "hub-spoke"
   ],
   "author": "chris-bit1010010",
   "license": "MIT",
