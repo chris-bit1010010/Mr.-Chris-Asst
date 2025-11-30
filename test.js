@@ -132,7 +132,7 @@ try {
     const testRecords = [
         { id: '1', name: 'Test A', value: 100 },
         { id: '2', name: 'Test B', value: 200 },
-        { id: '1', name: 'Test A', value: 150 }  // Duplicate based on id and name
+        { id: '1', name: 'Test A', value: 150 }  // Duplicate based on ID and name
     ];
     const { unique, duplicates } = assistant.workspaceOrganizer.detectDuplicates(testRecords, ['id', 'name']);
     if (unique.length === 2 && duplicates.length === 1) {

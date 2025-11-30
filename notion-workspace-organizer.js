@@ -605,7 +605,7 @@ class NotionWorkspaceOrganizer {
             colors: {
                 priority: {
                     high: 'Red',
-                    medium: 'Yellow', 
+                    medium: 'Yellow',
                     low: 'Green'
                 },
                 status: {

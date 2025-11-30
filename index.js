@@ -3,6 +3,10 @@ console.log('👋 Hello! I am Mr. Chris Assistant, ready to help you!');
 console.log('📝 To get started, check the README.md file for instructions.');
 console.log('✨ This is a basic Node.js application template.');
 
+// Import required modules
+const fs = require('fs');
+const path = require('path');
+
 // Import Flow Template functionality
 const NotionFlowTemplate = require('./flow-template.js');
 // Import Workspace Organizer functionality
@@ -75,8 +79,6 @@ assistant.greet();
 assistant.help();
 
 // Run Flow Template if notion files exist
-const fs = require('fs');
-const path = require('path');
 if (fs.existsSync(path.join(__dirname, 'notion_files'))) {
     console.log('\n🎯 Auto Notion Flow Template detected!');
     assistant.runFlowTemplate();
