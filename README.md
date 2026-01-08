@@ -4,6 +4,14 @@
 
 **Mr. Chris Assistant** is a helpful assistant application built with Node.js to assist with various tasks.
 
+## ✨ Features
+
+- **Flow Template**: Auto Notion integration for lottery business model
+- **Workspace Organizer**: PARA methodology and Hub & Spoke organization
+- **Deduplication**: Automatic duplicate detection and archiving
+- **Tagging System**: Consistent categorization across databases
+- **Style Guidelines**: Unified naming and icon conventions
+
 ## 🚀 วิธีการเริ่มต้นใช้งาน (Getting Started)
 
 ### ข้อกำหนดเบื้องต้น (Prerequisites)
@@ -60,12 +68,24 @@ npm run build
 
 ```
 Mr.-Chris-Asst/
-├── index.js          # ไฟล์หลักของแอปพลิเคชัน (Main application file)
-├── test.js           # ไฟล์ทดสอบ (Test file)
-├── package.json      # ข้อมูลโปรเจ็กต์และ dependencies
-├── README.md         # คู่มือการใช้งาน (This file)
-├── .gitignore        # ไฟล์ที่ Git จะไม่ติดตาม
-└── .github/          # GitHub Actions workflows
+├── index.js                      # Main application file
+├── flow-template.js              # Notion Flow Template
+├── flow-template-utility.js      # Flow Template utilities
+├── notion-workspace-organizer.js # Workspace Organizer (PARA & Hub/Spoke)
+├── test.js                       # Test file
+├── package.json                  # Project dependencies
+├── README.md                     # This file
+├── FLOW-TEMPLATE-GUIDE.md        # Flow Template documentation
+├── NOTION-WORKSPACE-GUIDE.md     # Workspace Organizer documentation
+├── .gitignore                    # Git ignore file
+├── notion_files/                 # Notion CSV data files
+│   ├── notion_Draws.csv
+│   ├── notion_Participants.csv
+│   ├── notion_Entries.csv
+│   ├── notion_Payments_manual.csv
+│   ├── notion_PayoutRules.csv
+│   └── archives/                 # Archived duplicate entries
+└── .github/                      # GitHub Actions workflows
     └── workflows/
         └── azure-webapps-node.yml  # Azure deployment workflow
 ```
@@ -132,6 +152,9 @@ This project includes a GitHub Actions workflow for automatic deployment to Azur
 | `npm run dev` | เริ่มต้นในโหมด development |
 | `npm test` | รันเทส |
 | `npm run build` | Build โปรเจ็กต์ |
+| `npm run workspace-analyze` | Analyze workspace for duplicates |
+| `npm run workspace-organize` | Run workspace reorganization (dry run) |
+| `npm run workspace-report` | Generate reorganization report |
 
 ### 🔧 การแก้ปัญหา (Troubleshooting)
 
